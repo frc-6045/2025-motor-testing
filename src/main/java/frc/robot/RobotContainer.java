@@ -84,8 +84,8 @@ public class RobotContainer {
     //m_operatorController.b().onTrue(new PIDArmAndElevator(m_ArmSubsystem, PositionConstants.kHumanArmPosition, m_ElevatorSubsystem, PositionConstants.kHumanElevatorPosition));
 
     // d pad controls elevator
-    m_operatorController.pov(0).onTrue(new ElevatorCommand(m_ElevatorSubsystem, true));
-    m_operatorController.pov(180).onTrue(new ElevatorCommand(m_ElevatorSubsystem, false));
+    m_operatorController.pov(0).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, true));
+    m_operatorController.pov(180).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, false));
       
     // paddles will have setpoints 1-8
 
