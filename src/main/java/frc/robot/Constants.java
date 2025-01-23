@@ -18,7 +18,7 @@ public final class Constants {
     public static final int kSparkFlexArmMotorCANID = 9;
 
     public static final int kSparkFlexArmMotorCurrentLimit = 40;
-    public static final double kSparkFlexArmMotorSpeed = .2;
+    public static final double kSparkFlexArmMotorSpeed = .25;
     public static final double kSparkFlexArmMotorMaxSpeed = 0.5;
 
     //public static final double armEncoderHorizontalOffset = 0.1649185041229626;
@@ -28,7 +28,7 @@ public final class Constants {
     public static final int kSparkFlexElevatorMotor2CANID = 11;
 
     public static final int kSparkFlexElevatorMotorsCurrentLimit = 40;
-    public static final double kSparkFlexElevatorMotorsSpeed = .29;
+    public static final double kSparkFlexElevatorMotorsSpeed = .4;
     public static final double kSparkFlexElevatorMotorsMaxSpeed = .4;
 
     // intake constants
