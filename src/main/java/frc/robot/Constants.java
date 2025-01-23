@@ -28,7 +28,7 @@ public final class Constants {
     public static final int kSparkFlexElevatorMotor2CANID = 11;
 
     public static final int kSparkFlexElevatorMotorsCurrentLimit = 40;
-    public static final double kSparkFlexElevatorMotorsSpeed = .05;
+    public static final double kSparkFlexElevatorMotorsSpeed = .29;
     public static final double kSparkFlexElevatorMotorsMaxSpeed = .4;
 
     // intake constants

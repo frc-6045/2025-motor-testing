@@ -65,12 +65,12 @@ public class RobotContainer {
     // operator triggers control coral intake
     m_operatorController.leftTrigger().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
     m_operatorController.rightTrigger().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
-    m_operatorController.leftBumper().onTrue(new InstantCommand(() -> {RobotContainer.BumperPressed=1;}));
-    m_operatorController.rightBumper().onTrue(new InstantCommand(() -> {RobotContainer.BumperPressed=-1;}));
-    m_operatorController.leftBumper().onFalse(new InstantCommand(() -> {RobotContainer.BumperPressed=0;}));
-    m_operatorController.rightBumper().onFalse(new InstantCommand(() -> {RobotContainer.BumperPressed=0;}));
-    m_operatorController.leftBumper().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
-    m_operatorController.rightBumper().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
+    //m_operatorController.leftBumper().onTrue(new InstantCommand(() -> {RobotContainer.BumperPressed=1;}));
+    //m_operatorController.rightBumper().onTrue(new InstantCommand(() -> {RobotContainer.BumperPressed=-1;}));
+    //m_operatorController.leftBumper().onFalse(new InstantCommand(() -> {RobotContainer.BumperPressed=0;}));
+    //m_operatorController.rightBumper().onFalse(new InstantCommand(() -> {RobotContainer.BumperPressed=0;}));
+    //m_operatorController.leftBumper().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
+    //m_operatorController.rightBumper().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
 
     // arm
     m_driverController.leftTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, true, m_driverController));
