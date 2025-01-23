@@ -18,8 +18,13 @@ import java.util.concurrent.TimeUnit;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -31,11 +36,14 @@ public class MAXSwerveModule {
   private final SparkFlex m_drivingSparkMax;
   private final SparkMax m_turningSparkMax;
 
+  private SparkFlexConfig m_SparkFlexConfig = new SparkFlexConfig();
+  private SparkMaxConfig m_SparkMaxConfig = new SparkMaxConfig();
+
   private final RelativeEncoder m_drivingEncoder;
   private final SparkAbsoluteEncoder m_turningEncoder;
 
-  private final SparkPIDController m_drivingPIDController;
-  private final SparkPIDController m_turningPIDController;
+  //private final SparkPIDController m_drivingPIDController;
+  //private final SparkPIDController m_turningPIDController;
   private final SimpleMotorFeedforward m_SimpleMotorFeedforward;
 
   private double m_chassisAngularOffset = 0;
@@ -52,24 +60,31 @@ public class MAXSwerveModule {
     m_drivingSparkMax = new SparkFlex(drivingCANId, MotorType.kBrushless);
     m_turningSparkMax = new SparkMax(turningCANId, MotorType.kBrushless);
 
-    // Factory reset, so we get the SPARKS MAX to a known state before configuring
-    // them. This is useful in case a SPARK MAX is swapped out.
-    m_drivingSparkMax.restoreFactoryDefaults();
-    m_turningSparkMax.restoreFactoryDefaults();
-
     // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
-    m_drivingEncoder = m_drivingSparkMax.getEncoder();
-    m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(Type.kDutyCycle);
-    m_drivingPIDController = m_drivingSparkMax.getPIDController();
-    m_turningPIDController = m_turningSparkMax.getPIDController();
-    m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
-    m_turningPIDController.setFeedbackDevice(m_turningEncoder);
+    //m_drivingEncoder = m_drivingSparkMax.getEncoder();
+    //m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(Type.kDutyCycle);
+    //m_drivingPIDController = m_drivingSparkMax.getPIDController();
+    //m_turningPIDController = m_turningSparkMax.getPIDController();
+    //m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
+    //m_turningPIDController.setFeedbackDevice(m_turningEncoder);
+    m_SparkFlexConfig.encoder
+      .positionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor)
+      .velocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
+    m_SparkFlexConfig.closedLoop
+      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+      .pid(ModuleConstants.kDrivingP,ModuleConstants.kDrivingI,ModuleConstants.kDrivingD);
 
+    m_SparkMaxConfig.encoder
+      .positionConversionFactor()
+      .velocityConversionFactor();
+    m_SparkMaxConfig.closedLoop
+      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+      .pid(ModuleConstants.kTurningP,ModuleConstants.kTurningI,ModuleConstants.kTurningD);
+
+    
     // Apply position and velocity conversion factors for the driving encoder. The
     // native units for position and velocity are rotations and RPM, respectively,
     // but we want meters and meters per second to use with WPILib's swerve APIs.
-    m_drivingEncoder.setPositionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
-    m_drivingEncoder.setVelocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
 
     // Apply position and velocity conversion factors for the turning encoder. We
     // want these in radians and radians per second to use with WPILib's swerve
@@ -91,22 +106,22 @@ public class MAXSwerveModule {
 
     // Set the PID gains for the driving motor. Note these are example gains, and you
     // may need to tune them for your own robot!
-    m_drivingPIDController.setP(ModuleConstants.kDrivingP);
-    m_drivingPIDController.setI(ModuleConstants.kDrivingI);
-    m_drivingPIDController.setD(ModuleConstants.kDrivingD);
-    m_drivingPIDController.setFF(ModuleConstants.kDrivingFF);
-    m_drivingPIDController.setOutputRange(ModuleConstants.kDrivingMinOutput,
-        ModuleConstants.kDrivingMaxOutput);
+    //m_drivingPIDController.setP(ModuleConstants.kDrivingP);
+    //m_drivingPIDController.setI(ModuleConstants.kDrivingI);
+    //m_drivingPIDController.setD(ModuleConstants.kDrivingD);
+    //m_drivingPIDController.setFF(ModuleConstants.kDrivingFF);
+    //m_drivingPIDController.setOutputRange(ModuleConstants.kDrivingMinOutput,
+    //    ModuleConstants.kDrivingMaxOutput);
 
     // Set the PID gains for the turning motor. Note these are example gains, and you
     // may need to tune them for your own robot!
     //TODO: maybe making our turning feed forward negative? probably break something but its worth a shot
-    m_turningPIDController.setP(ModuleConstants.kTurningP);
-    m_turningPIDController.setI(ModuleConstants.kTurningI);
-    m_turningPIDController.setD(ModuleConstants.kTurningD);
-    m_turningPIDController.setFF(ModuleConstants.kTurningFF);
-    m_turningPIDController.setOutputRange(ModuleConstants.kTurningMinOutput,
-        ModuleConstants.kTurningMaxOutput);
+    //m_turningPIDController.setP(ModuleConstants.kTurningP);
+    //m_turningPIDController.setI(ModuleConstants.kTurningI);
+    //m_turningPIDController.setD(ModuleConstants.kTurningD);
+    //m_turningPIDController.setFF(ModuleConstants.kTurningFF);
+    //m_turningPIDController.setOutputRange(ModuleConstants.kTurningMinOutput,
+    //    ModuleConstants.kTurningMaxOutput);
 
     m_drivingSparkMax.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
     m_turningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
