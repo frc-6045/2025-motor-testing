@@ -18,7 +18,8 @@ import java.util.concurrent.TimeUnit;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
-import
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -27,11 +28,11 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants.ModuleConstants;
 
 public class MAXSwerveModule {
-  private final CANSparkFlex m_drivingSparkMax;
-  private final CANSparkMax m_turningSparkMax;
+  private final SparkFlex m_drivingSparkMax;
+  private final SparkMax m_turningSparkMax;
 
   private final RelativeEncoder m_drivingEncoder;
-  private final AbsoluteEncoder m_turningEncoder;
+  private final SparkAbsoluteEncoder m_turningEncoder;
 
   private final SparkPIDController m_drivingPIDController;
   private final SparkPIDController m_turningPIDController;
@@ -48,8 +49,8 @@ public class MAXSwerveModule {
    * Encoder.
    */
   public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset, boolean isInverted) {
-    m_drivingSparkMax = new CANSparkFlex(drivingCANId, MotorType.kBrushless);
-    m_turningSparkMax = new CANSparkMax(turningCANId, MotorType.kBrushless);
+    m_drivingSparkMax = new SparkFlex(drivingCANId, MotorType.kBrushless);
+    m_turningSparkMax = new SparkMax(turningCANId, MotorType.kBrushless);
 
     // Factory reset, so we get the SPARKS MAX to a known state before configuring
     // them. This is useful in case a SPARK MAX is swapped out.
