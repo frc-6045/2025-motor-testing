@@ -59,6 +59,10 @@ public final class Constants {
     public static final double kSetpoint1ArmPosition = 0;
     public static final double kSetpoint1ElevatorPosition = 0;
   }
+
+  public static class ModuleConstants {
+    
+  }
 }
 
 // maek controler wurk plez
