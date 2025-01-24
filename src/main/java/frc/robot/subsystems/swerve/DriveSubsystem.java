@@ -7,11 +7,13 @@ package frc.robot.subsystems.swerve;
 import java.io.IOException;
 import java.util.function.DoubleSupplier;
 
+import javax.script.Bindings;
+
 //import org.photonvision.PhotonCamera;
 //import org.photonvision.PhotonPoseEstimator;
 //import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
-import com.kauailabs.navx.frc.AHRS;
+import com.studica.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
@@ -89,7 +91,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   private final PIDController m_VisionLockController = new PIDController(0.014, 0, 0);
   // The gyro sensor
-  private final AHRS m_gyro = new AHRS(SPI.Port.kMXP, (byte) 200);
+  private final AHRS m_gyro = new AHRS(AHRS.NavXComType.kMXP_SPI, AHRS.NavXUpdateRate.k200Hz);
 
   // Odometry class for tracking robot pose
       private final SwerveDrivePoseEstimator m_poseEstimator =
