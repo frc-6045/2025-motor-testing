@@ -11,8 +11,8 @@ import java.util.function.DoubleSupplier;
 //import org.photonvision.PhotonPoseEstimator;
 //import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
-//import com.kauailabs.navx.frc.AHRS;
-//import com.pathplanner.lib.auto.AutoBuilder;
+import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;

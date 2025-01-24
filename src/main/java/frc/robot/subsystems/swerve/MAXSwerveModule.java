@@ -22,8 +22,10 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.ClosedLoopSlot;
 
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -44,7 +46,7 @@ public class MAXSwerveModule {
   private SparkMaxConfig m_TurningConfig = new SparkMaxConfig();
 
   private final RelativeEncoder m_drivingEncoder;
-  private final RelativeEncoder m_turningEncoder;
+  private final AbsoluteEncoder m_turningEncoder;
 
   //private final SparkPIDController m_drivingPIDController;
   //private final SparkPIDController m_turningPIDController;
@@ -110,7 +112,7 @@ public class MAXSwerveModule {
     m_turningPIDController = m_turningSparkMax.getClosedLoopController();
 
     m_drivingEncoder = m_drivingSparkFlex.getEncoder();
-    m_turningEncoder = m_turningSparkMax.getEncoder();
+    m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder();
 
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(m_turningEncoder.getPosition());
@@ -164,8 +166,8 @@ public class MAXSwerveModule {
     // Command driving and turning SPARKS MAX towards their respective setpoints.
     //m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity, 0, m_SimpleMotorFeedforward.calculate(optimizedDesiredState.speedMetersPerSecond));
     //m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
-    m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, SparkMax.ControlType.kVelocity, 0, m_SimpleMotorFeedforward.calculate(optimizedDesiredState.speedMetersPerSecond));
-    m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), SparkMax.Controltype.kPosition);
+    m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, SparkMax.ControlType.kVelocity, ClosedLoopSlot.kSlot0, m_SimpleMotorFeedforward.calculate(optimizedDesiredState.speedMetersPerSecond));
+    m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), SparkMax.ControlType.kPosition);
 
     m_desiredState = desiredState;
   }
