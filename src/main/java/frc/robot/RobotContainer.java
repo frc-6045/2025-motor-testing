@@ -26,6 +26,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import javax.swing.text.Position;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+//Quinn
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -39,6 +41,7 @@ public class RobotContainer {
   public final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   public final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   public static int BumperPressed = 0;
+  private static boolean bIntakeToggle = true;
 
   // define controllers
   private final CommandXboxController m_operatorController =
@@ -73,8 +76,8 @@ public class RobotContainer {
     //m_operatorController.rightBumper().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
 
     // arm
-    m_driverController.leftTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, true, m_driverController));
-    m_driverController.rightTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, false, m_driverController));
+    m_driverController.rightTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, true, m_driverController));
+    m_driverController.leftTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, false, m_driverController));
     
    //m_operatorController.b().onTrue(new InstantCommand(() -> {System.out.println(m_ArmSubsystem.getAbsoluteEncoderPosition());}));
     m_operatorController.a().onTrue(new StopPIDArmAndElevator(m_ArmSubsystem, m_ElevatorSubsystem)); // stop PID arm
@@ -82,7 +85,18 @@ public class RobotContainer {
     // setpoints (y: home, b: human)2   
     //m_operatorController.y().onTrue(new PIDArmAndElevator(m_ArmSubsystem, PositionConstants.kHomeArmPosition, m_ElevatorSubsystem, PositionConstants.kHomeElevatorPosition));
     //m_operatorController.b().onTrue(new PIDArmAndElevator(m_ArmSubsystem, PositionConstants.kHumanArmPosition, m_ElevatorSubsystem, PositionConstants.kHumanElevatorPosition));
+//Quinn's Crap
 
+//m_operatorController.pov(90).whileTrue(new ArmCommand(m_ArmSubsystem, true, m_operatorController));
+   // m_operatorController.pov(270).whileTrue(new ArmCommand(m_ArmSubsystem, false, m_operatorController));
+    
+
+
+
+
+//m_operatorController.pov(90).whileTrue(new ArmCommand(m_ArmSubsystem, true, m_operatorController));
+//m_operatorController.pov(270).whileTrue(new ArmCommand(m_ArmSubsystem, false, m_operatorController));
+    
     // d pad controls elevator
     m_operatorController.pov(0).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, true));
     m_operatorController.pov(180).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, false));
