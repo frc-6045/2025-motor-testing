@@ -158,12 +158,12 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     // TODO: test if this is the thing making it do circles (i.e isCharacterizing == True)
-    //if(isCharacterizing){
-    //  m_frontLeft.runCharacterization(characterizationVolts, DriveConstants.kFrontLeftChassisAngularOffset);
-    //  m_frontRight.runCharacterization(characterizationVolts, DriveConstants.kFrontRightChassisAngularOffset);
-    //  m_rearLeft.runCharacterization(characterizationVolts, DriveConstants.kRearLeftChassisAngularOffset);
-    //  m_rearRight.runCharacterization(characterizationVolts, DriveConstants.kRearRightChassisAngularOffset);
-    //}
+    if(isCharacterizing){
+      m_frontLeft.runCharacterization(characterizationVolts, DriveConstants.kFrontLeftChassisAngularOffset);
+      m_frontRight.runCharacterization(characterizationVolts, DriveConstants.kFrontRightChassisAngularOffset);
+      m_rearLeft.runCharacterization(characterizationVolts, DriveConstants.kRearLeftChassisAngularOffset);
+      m_rearRight.runCharacterization(characterizationVolts, DriveConstants.kRearRightChassisAngularOffset);
+    }
     
     // Stolen from Isaac, thanks Isaac!!
     //Vision.addFilteredPoseData(getPose(), m_poseEstimator);
@@ -522,7 +522,7 @@ public void setModuleTurnVoltage(double voltage) {
   }
 
 public void runCharacterizationVolts(double volts){
-  isCharacterizing = true;
+  isCharacterizing = false;
   characterizationVolts = volts;
 }
 
