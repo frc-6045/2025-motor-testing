@@ -14,7 +14,7 @@ import javax.script.Bindings;
 //import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 import com.studica.frc.AHRS;
-import com.pathplanner.lib.auto.AutoBuilder;
+//import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -118,7 +118,7 @@ public class DriveSubsystem extends SubsystemBase {
             //for characterization
             private boolean isCharacterizing = false;
             private double characterizationVolts = 0.0;
-      private Vision vision;
+      //private Vision vision;
 
   /** Creates a new DriveSubsystem. */
     public DriveSubsystem() {
@@ -136,21 +136,21 @@ public class DriveSubsystem extends SubsystemBase {
     
 
 
-     AutoBuilder.configureHolonomic(
-      this::getPose,
-      this::resetOdometry,
-      this::getChassisSpeeds,
-      this::setRobotRelativeSpeeds, 
-       AutoConstants.autoBuilderPathConfig,
-       () -> {var alliance = DriverStation.getAlliance();
-        if(alliance.isPresent()){
-          return alliance.get() == DriverStation.Alliance.Red;
-        }
-        return false;},
-      this);
+     //AutoBuilder.configureHolonomic(
+     // this::getPose,
+     // this::resetOdometry,
+     // this::getChassisSpeeds,
+     // this::setRobotRelativeSpeeds, 
+     //  AutoConstants.autoBuilderPathConfig,
+     //  () -> {var alliance = DriverStation.getAlliance();
+     //   if(alliance.isPresent()){
+     //     return alliance.get() == DriverStation.Alliance.Red;
+     //   }
+     //   return false;},
+     // this);
 
     //SmartDashboard.putData("field", m_field);
-    vision = new Vision(this);
+    //vision = new Vision(this);
   }
 
   @Override
@@ -178,7 +178,7 @@ public class DriveSubsystem extends SubsystemBase {
     //if(FieldConstants.kVisionEnable){
     //  vision.UpdateVision();
     //}
-    SmartDashboard.putBoolean("Compressor Enabled", Bindings.getCompressorEnabled());
+    //SmartDashboard.putBoolean("Compressor Enabled", Bindings.getCompressorEnabled());
     //SmartDashboard.putBoolean("Limit switch hit", Bindings.getCompressorEnabled());
     //SmartDashboard.putNumber("m_gyro_Get Heading", getHeadingDegrees());
     //SmartDashboard.putNumber("drive angle", getPoseHeading());
