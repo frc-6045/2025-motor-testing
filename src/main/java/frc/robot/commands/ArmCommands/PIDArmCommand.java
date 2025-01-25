@@ -6,11 +6,11 @@ import frc.robot.subsystems.ArmSubsystem;
 
 public class PIDArmCommand extends Command {
     private PIDController m_ArmPIDController;
-    private final ArmSubsystem m_ArmMotor;
+    private final ArmSubsystem m_ArmSubsystem;
     private double setPoint;
 
     public PIDArmCommand(ArmSubsystem m_ArmMotor, double setPoint) {
-        this.m_ArmMotor = m_ArmMotor;
+        this.m_ArmSubsystem = m_ArmMotor;
         this.setPoint = setPoint;
 
         m_ArmPIDController = new PIDController(6, 0, 0);
@@ -23,14 +23,14 @@ public class PIDArmCommand extends Command {
     public void execute() {
         //double feedforward = 0.01;
         //if (m_ArmMotor.getAbsoluteEncoderPosition()-setPoint<0.01 && m_ArmMotor.getAbsoluteEncoderPosition()-setPoint>-0.01) m_ArmMotor.stopArmMotor();;;
-        double speed = -m_ArmPIDController.calculate(m_ArmMotor.getAbsoluteEncoderPosition(), setPoint);
+        double speed = -m_ArmPIDController.calculate(m_ArmSubsystem.getAbsoluteEncoderPosition(), setPoint);
         //speed = (speed>0) ? speed + feedforward : speed-feedforward;
-        m_ArmMotor.setSpeed(speed);
-        System.out.println("PIDArm output (speed): " + speed + "\nset point: " + m_ArmPIDController.getSetpoint() + "\ncurrent position: " + m_ArmMotor.getAbsoluteEncoderPosition());
+        m_ArmSubsystem.setSpeed(speed);
+        System.out.println("PIDArm output (speed): " + speed + "\nset point: " + m_ArmPIDController.getSetpoint() + "\ncurrent position: " + m_ArmSubsystem.getAbsoluteEncoderPosition());
     }
 
     @Override
     public void end(boolean Interrupted) {
-        m_ArmMotor.stopArmMotor();
+        m_ArmSubsystem.stopArmMotor();
     }
 }
