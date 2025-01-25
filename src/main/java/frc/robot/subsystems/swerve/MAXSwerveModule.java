@@ -4,14 +4,7 @@
 
 package frc.robot.subsystems.swerve;
 
-//import com.revrobotics.AbsoluteEncoder;
-//import com.revrobotics.CANSparkBase.ControlType;
-//import com.revrobotics.CANSparkFlex; -
-//import com.revrobotics.CANSparkLowLevel.MotorType;
-//import com.revrobotics.CANSparkMax; -
-//import com.revrobotics.RelativeEncoder; -
-//import com.revrobotics.SparkAbsoluteEncoder.Type;
-//import com.revrobotics.SparkPIDController; -
+
 
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
@@ -72,7 +65,7 @@ public class MAXSwerveModule {
     //m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
     //m_turningPIDController.setFeedbackDevice(m_turningEncoder);
 
-    m_DrivingConfig
+    /*m_DrivingConfig
       .smartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit)
       .inverted(isInverted)
       .idleMode(ModuleConstants.kDrivingMotorIdleMode);
@@ -101,7 +94,7 @@ public class MAXSwerveModule {
       .outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput)
       .pidf(ModuleConstants.kTurningP,ModuleConstants.kTurningI,ModuleConstants.kTurningD,ModuleConstants.kTurningFF);
     m_TurningConfig.signals
-      .primaryEncoderPositionPeriodMs(5);
+      .primaryEncoderPositionPeriodMs(5);*/
 
     m_drivingSparkFlex.configure(m_DrivingConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_turningSparkMax.configure(m_TurningConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

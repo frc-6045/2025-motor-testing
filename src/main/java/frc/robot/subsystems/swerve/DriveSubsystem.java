@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.function.DoubleSupplier;
 
 import javax.script.Bindings;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 //import org.photonvision.PhotonCamera;
 //import org.photonvision.PhotonPoseEstimator;
@@ -293,6 +294,10 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
     m_rearRight.setDesiredState(swerveModuleStates[3]);
+    System.out.println("front left: " + swerveModuleStates[0]);
+    System.out.println("front right: " + swerveModuleStates[1]);
+    System.out.println("rear left: " + swerveModuleStates[2]);
+    System.out.println("rear right: " + swerveModuleStates[3]);
     
   }
 
