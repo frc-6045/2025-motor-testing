@@ -158,12 +158,12 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     // TODO: test if this is the thing making it do circles (i.e isCharacterizing == True)
-    if(isCharacterizing){
-      m_frontLeft.runCharacterization(characterizationVolts, DriveConstants.kFrontLeftChassisAngularOffset);
-      m_frontRight.runCharacterization(characterizationVolts, DriveConstants.kFrontRightChassisAngularOffset);
-      m_rearLeft.runCharacterization(characterizationVolts, DriveConstants.kRearLeftChassisAngularOffset);
-      m_rearRight.runCharacterization(characterizationVolts, DriveConstants.kRearRightChassisAngularOffset);
-    }
+    //if(isCharacterizing){
+    //  m_frontLeft.runCharacterization(characterizationVolts, DriveConstants.kFrontLeftChassisAngularOffset);
+    //  m_frontRight.runCharacterization(characterizationVolts, DriveConstants.kFrontRightChassisAngularOffset);
+    //  m_rearLeft.runCharacterization(characterizationVolts, DriveConstants.kRearLeftChassisAngularOffset);
+    //  m_rearRight.runCharacterization(characterizationVolts, DriveConstants.kRearRightChassisAngularOffset);
+    //}
     
     // Stolen from Isaac, thanks Isaac!!
     //Vision.addFilteredPoseData(getPose(), m_poseEstimator);
@@ -180,14 +180,14 @@ public class DriveSubsystem extends SubsystemBase {
     //}
     //SmartDashboard.putBoolean("Compressor Enabled", Bindings.getCompressorEnabled());
     //SmartDashboard.putBoolean("Limit switch hit", Bindings.getCompressorEnabled());
-    //SmartDashboard.putNumber("m_gyro_Get Heading", getHeadingDegrees());
-    //SmartDashboard.putNumber("drive angle", getPoseHeading());
+    SmartDashboard.putNumber("m_gyro_Get Heading", getHeadingDegrees());
+    SmartDashboard.putNumber("drive angle", getPoseHeading());
     //SmartDashboard.putNumber("target angle 8lue", PoseMath.getTargetAngle(FieldConstants.kSpeakerBackLocation, getPose()).getDegrees());
     //SmartDashboard.putNumber("target angle red", PoseMath.getTargetAngle(FieldConstants.kRedSpeakerBackLocation, getPose()).getDegrees());
-    //SmartDashboard.putNumber("Front Left", m_frontLeft.getPosition().distanceMeters);
-    //SmartDashboard.putNumber("Front Right", m_frontRight.getPosition().distanceMeters);
-    //SmartDashboard.putNumber("Rear Left", m_rearLeft.getPosition().distanceMeters);
-    //SmartDashboard.putNumber("Rear Right", m_rearRight.getPosition().distanceMeters);
+    SmartDashboard.putNumber("Front Left", m_frontLeft.getPosition().distanceMeters);
+    SmartDashboard.putNumber("Front Right", m_frontRight.getPosition().distanceMeters);
+    SmartDashboard.putNumber("Rear Left", m_rearLeft.getPosition().distanceMeters);
+    SmartDashboard.putNumber("Rear Right", m_rearRight.getPosition().distanceMeters);
 
     //SmartDashboard.putNumber("shooter angle number", LookupTables.getAngleValueAtDistance(PoseMath.getDistanceToSpeakerBack(getPose())));
     //m_field.setRobotPose(getPose());
