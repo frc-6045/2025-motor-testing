@@ -4,13 +4,10 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.servohub.ServoHub.ResetMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -22,24 +19,20 @@ import frc.robot.Constants.MotorConstants;
 public class ArmSubsystem extends SubsystemBase {
 /** thing */
   private final SparkFlex m_ArmMotor;
-  private final AbsoluteEncoder m_AbsoluteEncoder;
-  SparkFlexConfig config = new SparkFlexConfig();
+  private final DutyCycleEncoder m_AbsoluteEncoder;
 
   /** Creates a new ExampleSubsystem. */
   public ArmSubsystem() {
     m_ArmMotor = new SparkFlex(MotorConstants.kSparkFlexArmMotorCANID, MotorType.kBrushless);
-    //m_AbsoluteEncoder = new DutyCycleEncoder(9);
-    updateMotorSettingsForTest(m_ArmMotor);
-    m_ArmMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    m_AbsoluteEncoder = m_ArmMotor.getAbsoluteEncoder();
+    m_AbsoluteEncoder = new DutyCycleEncoder(9);
+    //updateMotorSettingsForTest();
   }
 
-   public void updateMotorSettingsForTest(SparkFlex motor) {
-    config
-        .idleMode(IdleMode.kBrake)
-        .smartCurrentLimit(MotorConstants.kIntakeMotorsCurrentLimit);
-    config.closedLoop
-        .feedbackSensor(FeedbackSensor.kPrimaryEncoder);
+   public void updateMotorSettingsForTest() {
+    //m_ArmMotor.restoreFactoryDefaults();
+    //m_ArmMotor.setSmartCurrentLimit(MotorConstants.kSparkFlexArmMotorCurrentLimit);
+    //m_ArmMotor.setIdleMode(IdleMode.kBrake);
+    //m_ArmMotor.burnFlash();
   }
 
   public void setSpeed(double speed) {
@@ -52,12 +45,12 @@ public class ArmSubsystem extends SubsystemBase {
     m_ArmMotor.stopMotor();
   }
 
-  public AbsoluteEncoder getAbsoluteEncoder() {
+  public DutyCycleEncoder getAbsoluteEncoder() {
     return m_AbsoluteEncoder;
   }
 
   public double getAbsoluteEncoderPosition() {
-    return m_AbsoluteEncoder.getPosition();
+    return m_AbsoluteEncoder.get();
   }
 
   @Override
