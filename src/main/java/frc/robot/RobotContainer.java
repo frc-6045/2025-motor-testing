@@ -85,12 +85,14 @@ public class RobotContainer {
     m_operatorController.pov(270).whileTrue(new ArmCommand(m_ArmSubsystem, false, m_operatorController));
     
 
-
-
-
-//m_operatorController.pov(90).whileTrue(new ArmCommand(m_ArmSubsystem, true, m_operatorController));
-//m_operatorController.pov(270).whileTrue(new ArmCommand(m_ArmSubsystem, false, m_operatorController));
-    
+    m_operatorController.pov(45).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, true, m_operatorController);
+                                                                          new ElevatorCommand(m_ElevatorSubsystem, true);}));
+    m_operatorController.pov(135).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, true, m_operatorController);
+                                                                          new ElevatorCommand(m_ElevatorSubsystem, false);}));
+    m_operatorController.pov(225).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, false, m_operatorController);
+                                                                          new ElevatorCommand(m_ElevatorSubsystem, false);}));
+    m_operatorController.pov(315).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, false, m_operatorController);
+                                                                          new ElevatorCommand(m_ElevatorSubsystem, true);}));
     // d pad controls elevator
     m_operatorController.pov(0).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, true));
     m_operatorController.pov(180).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, false));
