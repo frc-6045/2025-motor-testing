@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
@@ -21,7 +22,7 @@ import frc.robot.Constants.MotorConstants;
 public class ArmSubsystem extends SubsystemBase {
 /** thing */
   private final SparkFlex m_ArmMotor;
-  private final RelativeEncoder m_AbsoluteEncoder;
+  private final AbsoluteEncoder m_AbsoluteEncoder;
   SparkFlexConfig config = new SparkFlexConfig();
 
   /** Creates a new ExampleSubsystem. */
@@ -30,7 +31,7 @@ public class ArmSubsystem extends SubsystemBase {
     //m_AbsoluteEncoder = new DutyCycleEncoder(9);
     updateMotorSettingsForTest(m_ArmMotor);
     m_ArmMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    m_AbsoluteEncoder = m_ArmMotor.getEncoder();
+    m_AbsoluteEncoder = m_ArmMotor.getAbsoluteEncoder();
   }
 
    public void updateMotorSettingsForTest(SparkFlex motor) {
@@ -51,12 +52,12 @@ public class ArmSubsystem extends SubsystemBase {
     m_ArmMotor.stopMotor();
   }
 
-  public DutyCycleEncoder getAbsoluteEncoder() {
+  public AbsoluteEncoder getAbsoluteEncoder() {
     return m_AbsoluteEncoder;
   }
 
   public double getAbsoluteEncoderPosition() {
-    return m_AbsoluteEncoder.get();
+    return m_AbsoluteEncoder.getPosition();
   }
 
   @Override
