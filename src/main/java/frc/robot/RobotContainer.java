@@ -69,16 +69,10 @@ public class RobotContainer {
     // operator triggers control coral intake
     m_operatorController.leftTrigger().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
     m_operatorController.rightTrigger().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
-    m_operatorController.leftBumper().onTrue(new InstantCommand(() -> {RobotContainer.BumperPressed=1;}));
-    m_operatorController.rightBumper().onTrue(new InstantCommand(() -> {RobotContainer.BumperPressed=-1;}));
-    m_operatorController.leftBumper().onFalse(new InstantCommand(() -> {RobotContainer.BumperPressed=0;}));
-    m_operatorController.rightBumper().onFalse(new InstantCommand(() -> {RobotContainer.BumperPressed=0;}));
-    m_operatorController.leftBumper().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
-    m_operatorController.rightBumper().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
 
     // arm
-    m_driverController.leftTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, true, m_driverController));
-    m_driverController.rightTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, false, m_driverController));
+    //m_driverController.rightTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, true, m_driverController));
+    //m_driverController.leftTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, false, m_driverController));
     
    //m_operatorController.b().onTrue(new InstantCommand(() -> {System.out.println(m_ArmSubsystem.getAbsoluteEncoderPosition());}));
     m_operatorController.a().onTrue(new StopPIDArmAndElevator(m_ArmSubsystem, m_ElevatorSubsystem)); // stop PID arm
@@ -86,7 +80,20 @@ public class RobotContainer {
     // setpoints (y: home, b: human)2   
     //m_operatorController.y().onTrue(new PIDArmAndElevator(m_ArmSubsystem, PositionConstants.kHomeArmPosition, m_ElevatorSubsystem, PositionConstants.kHomeElevatorPosition));
     //m_operatorController.b().onTrue(new PIDArmAndElevator(m_ArmSubsystem, PositionConstants.kHumanArmPosition, m_ElevatorSubsystem, PositionConstants.kHumanElevatorPosition));
+//Quinn's Crap
 
+    m_operatorController.pov(90).whileTrue(new ArmCommand(m_ArmSubsystem, true, m_operatorController));
+    m_operatorController.pov(270).whileTrue(new ArmCommand(m_ArmSubsystem, false, m_operatorController));
+    
+
+    m_operatorController.pov(45).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, true, m_operatorController);
+                                                                          new ElevatorCommand(m_ElevatorSubsystem, true);}));
+    m_operatorController.pov(135).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, true, m_operatorController);
+                                                                          new ElevatorCommand(m_ElevatorSubsystem, false);}));
+    m_operatorController.pov(225).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, false, m_operatorController);
+                                                                          new ElevatorCommand(m_ElevatorSubsystem, false);}));
+    m_operatorController.pov(315).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, false, m_operatorController);
+                                                                          new ElevatorCommand(m_ElevatorSubsystem, true);}));
     // d pad controls elevator
     m_operatorController.pov(0).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, true));
     m_operatorController.pov(180).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, false));

@@ -39,11 +39,11 @@ public class ArmCommand extends Command {
   @Override
   public void execute() {
     double speed = MotorConstants.kSparkFlexArmMotorSpeed;
-    System.out.println(m_ArmMotor.getAbsoluteEncoderPosition());
+    System.out.println("ARM: speed is " +speed + "\nencoder position is" + m_ArmMotor.getAbsoluteEncoderPosition());
     if (goUp) {
-        m_ArmMotor.setSpeed(speed*m_Controller.getLeftTriggerAxis());
+        m_ArmMotor.setSpeed(speed);
     } else {
-        m_ArmMotor.setSpeed(-1*speed*m_Controller.getRightTriggerAxis());
+        m_ArmMotor.setSpeed(-1*speed);
     }
   }
 

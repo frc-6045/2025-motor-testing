@@ -19,8 +19,8 @@ public class IntakeCommand extends Command {
     public void execute() {
         double speed = MotorConstants.kIntakeMotorsSpeed;
         double triggerAxis = controller.getLeftTriggerAxis()-controller.getRightTriggerAxis();
-        m_IntakeSubsystem.setSpeed(speed, RobotContainer.BumperPressed, triggerAxis);
-        System.out.println("speed: " + speed + "\nbumperPressed: " + RobotContainer.BumperPressed + "\ntriggerAxis: " + triggerAxis);
+        m_IntakeSubsystem.setSpeed(speed, triggerAxis, triggerAxis);
+        System.out.println("INTAKE speed: " + speed + "\nbumperPressed: " + triggerAxis + "\ntriggerAxis: " + triggerAxis);
     }
 
     @Override
