@@ -81,12 +81,14 @@ public class MAXSwerveModule {
       .velocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
     m_DrivingConfig.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(ModuleConstants.kDrivingP,ModuleConstants.kDrivingI,ModuleConstants.kDrivingD);
+      .outputRange(ModuleConstants.kDrivingMinOutput, ModuleConstants.kDrivingMaxOutput)
+      .pidf(ModuleConstants.kDrivingP,ModuleConstants.kDrivingI,ModuleConstants.kDrivingD,ModuleConstants.kDrivingFF);
     m_DrivingConfig.signals
       .primaryEncoderPositionPeriodMs(5);
     
     m_TurningConfig
       .smartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit)
+      .inverted(ModuleConstants.kTurningEncoderInverted)
       .idleMode(ModuleConstants.kTurningMotorIdleMode);
     m_TurningConfig.encoder
       .positionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor)
@@ -95,14 +97,14 @@ public class MAXSwerveModule {
       .positionWrappingEnabled(true)
       .positionWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput)
       .positionWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput)
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(ModuleConstants.kTurningP,ModuleConstants.kTurningI,ModuleConstants.kTurningD);
+      .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+      .outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput)
+      .pidf(ModuleConstants.kTurningP,ModuleConstants.kTurningI,ModuleConstants.kTurningD,ModuleConstants.kTurningFF);
     m_TurningConfig.signals
       .primaryEncoderPositionPeriodMs(5);
 
     m_drivingSparkFlex.configure(m_DrivingConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_turningSparkMax.configure(m_TurningConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
     
     m_drivingPIDController = m_drivingSparkFlex.getClosedLoopController();
     m_turningPIDController = m_turningSparkMax.getClosedLoopController();
@@ -116,7 +118,6 @@ public class MAXSwerveModule {
 
     //Characterization Constants
     m_SimpleMotorFeedforward = new SimpleMotorFeedforward(0.198228, .342548); //ks: 0.1902 kv: .346228
-    
   }
 
   /**
