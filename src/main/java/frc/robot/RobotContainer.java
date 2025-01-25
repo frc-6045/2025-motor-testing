@@ -13,6 +13,7 @@ import frc.robot.Constants.PositionConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.swerve.DriveSubsystem;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.PIDArmAndElevator;
 import frc.robot.commands.StopPIDArmAndElevator;
@@ -25,9 +26,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import javax.swing.text.Position;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-//Quinn
-
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -41,7 +42,7 @@ public class RobotContainer {
   public final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   public final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   public static int BumperPressed = 0;
-  private static boolean bIntakeToggle = true;
+  public final DriveSubsystem m_DriveSubsystem = new DriveSubsystem();
 
   // define controllers
   private final CommandXboxController m_operatorController =
@@ -98,6 +99,16 @@ public class RobotContainer {
     m_operatorController.pov(180).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, false));
       
     // paddles will have setpoints 1-8
+
+    m_DriveSubsystem.setDefaultCommand(
+    new RunCommand(
+          () -> m_DriveSubsystem.drive( 
+              MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.30), 
+              MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.30),
+              MathUtil.applyDeadband(-m_driverController.getRightX(), 0.30),
+              true),
+          m_DriveSubsystem)
+    );
 
   }
   // /** 
