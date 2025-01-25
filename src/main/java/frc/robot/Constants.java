@@ -35,9 +35,9 @@ public final class Constants {
     public static final int kIntakeMotor1CANID = 12;
     public static final int kIntakeMotor2CANID = 13;
 
-    public static final int kIntakeMotorsCurrentLimit = 80;
-    public static final double kIntakeMotorsSpeed = .8;
-    public static final double kIntakeMotorsMaxSpeed = .9;
+    public static final int kIntakeMotorsCurrentLimit = 40;
+    public static final double kIntakeMotorsSpeed = .5;
+    public static final double kIntakeMotorsMaxSpeed = .6;
   }
 
   public static class OperatorConstants {
