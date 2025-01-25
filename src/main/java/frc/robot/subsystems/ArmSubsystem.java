@@ -4,8 +4,10 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -19,21 +21,24 @@ import frc.robot.Constants.MotorConstants;
 public class ArmSubsystem extends SubsystemBase {
 /** thing */
   private final SparkFlex m_ArmMotor;
-  private final DutyCycleEncoder m_AbsoluteEncoder;
+  private final RelativeEncoder m_AbsoluteEncoder;
   SparkFlexConfig config = new SparkFlexConfig();
 
   /** Creates a new ExampleSubsystem. */
   public ArmSubsystem() {
     m_ArmMotor = new SparkFlex(MotorConstants.kSparkFlexArmMotorCANID, MotorType.kBrushless);
-    m_AbsoluteEncoder = new DutyCycleEncoder(9);
+    //m_AbsoluteEncoder = new DutyCycleEncoder(9);
     updateMotorSettingsForTest(m_ArmMotor);
+    m_ArmMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    m_AbsoluteEncoder = m_ArmMotor.getEncoder();
   }
 
    public void updateMotorSettingsForTest(SparkFlex motor) {
     config
         .idleMode(IdleMode.kBrake)
         .smartCurrentLimit(MotorConstants.kIntakeMotorsCurrentLimit);
-    motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    config.closedLoop
+        .feedbackSensor(FeedbackSensor.kPrimaryEncoder);
   }
 
   public void setSpeed(double speed) {
