@@ -10,14 +10,17 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MotorConstants;
 
-public class MotorToTest extends SubsystemBase {
-    private final SparkFlex m_SparkFlexMotor;
+public class SparkFlexMotors extends SubsystemBase {
+    private final SparkFlex m_SparkFlexMotor1;
+    private final SparkFlex m_SparkFlexMotor2;
     SparkFlexConfig config = new SparkFlexConfig();
 
-    public MotorToTest() {
-        m_SparkFlexMotor = new SparkFlex(MotorConstants.kSparkFlexMotorCANID, MotorType.kBrushless);
+    public SparkFlexMotors() {
+        m_SparkFlexMotor1 = new SparkFlex(MotorConstants.kSparkFlexMotor1CANID, MotorType.kBrushless);
+        m_SparkFlexMotor2 = new SparkFlex(MotorConstants.kSparkFlexMotor2CANID, MotorType.kBrushless);
 
-        updateMotorSettings(m_SparkFlexMotor);
+        updateMotorSettings(m_SparkFlexMotor1);
+        updateMotorSettings(m_SparkFlexMotor2);
     }
     public void updateMotorSettings(SparkFlex motor) {
         config
@@ -25,9 +28,10 @@ public class MotorToTest extends SubsystemBase {
             .smartCurrentLimit(MotorConstants.kSparkFlexMotorCurrentLimit);
         motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }   
-    public void setSpeed(double speed, double runMotor1) {
-        if (speed>MotorConstants.kSparkFlexElevatorMotorsMaxSpeed)
-          speed = MotorConstants.kSparkFlexElevatorMotorsMaxSpeed;
-        m_SparkFlexMotor.set(speed*runMotor1);
+    public void setSpeed(double speed, double runMotors) {
+        if (speed>MotorConstants.kSparkFlexMotorMaxSpeed)
+          speed = MotorConstants.kSparkFlexMotorMaxSpeed;
+        m_SparkFlexMotor1.set(speed*runMotors);
+        m_SparkFlexMotor2.set(speed*runMotors);
     }
 }
