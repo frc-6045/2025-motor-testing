@@ -7,20 +7,12 @@ package frc.robot;
 // constants
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.MotorConstants;
-import frc.robot.Constants.PositionConstants;
 
 // subsystems
-import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.swerve.DriveSubsystem;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.PIDArmAndElevator;
-import frc.robot.commands.StopPIDArmAndElevator;
-import frc.robot.commands.ArmCommands.ArmCommand;
-import frc.robot.commands.ArmCommands.PIDArmCommand;
-import frc.robot.commands.ArmCommands.StopPIDArmCommand;
-import frc.robot.commands.ElevatorCommands.ElevatorCommand;
+import frc.robot.subsystems.SparkFlexMotors;
+import frc.robot.subsystems.SparkMaxMotors;
+import frc.robot.commands.SparkFlexTest;
+import frc.robot.commands.SparkMaxTest;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -38,11 +30,9 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public final ArmSubsystem m_ArmSubsystem = new ArmSubsystem();
-  public final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
-  public final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  public final SparkFlexMotors m_SparkFlexTest = new SparkFlexMotors();
+  public final SparkMaxMotors m_SparkMaxMotors = new SparkMaxMotors();
   public static int BumperPressed = 0;
-  public final DriveSubsystem m_DriveSubsystem = new DriveSubsystem();
 
   // define controllers
   private final CommandXboxController m_operatorController =
@@ -67,48 +57,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // operator triggers control coral intake
-    m_operatorController.leftTrigger().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
-    m_operatorController.rightTrigger().whileTrue(new IntakeCommand(m_IntakeSubsystem, m_operatorController));
+    m_operatorController.leftTrigger().whileTrue(new SparkFlexTest(m_SparkFlexTest, m_operatorController));
+    m_operatorController.rightTrigger().whileTrue(new SparkFlexTest(m_SparkFlexTest, m_operatorController));
 
-    // arm
-    //m_driverController.rightTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, true, m_driverController));
-    //m_driverController.leftTrigger().whileTrue(new ArmCommand(m_ArmSubsystem, false, m_driverController));
+    m_operatorController.leftBumper().whileTrue(new SparkMaxTest(m_SparkMaxMotors, true));
+    m_operatorController.rightBumper().whileTrue(new SparkMaxTest(m_SparkMaxMotors, false));
     
-   //m_operatorController.b().onTrue(new InstantCommand(() -> {System.out.println(m_ArmSubsystem.getAbsoluteEncoderPosition());}));
-    m_operatorController.a().onTrue(new StopPIDArmAndElevator(m_ArmSubsystem, m_ElevatorSubsystem)); // stop PID arm
-
-    // setpoints (y: home, b: human)2   
-    //m_operatorController.y().onTrue(new PIDArmAndElevator(m_ArmSubsystem, PositionConstants.kHomeArmPosition, m_ElevatorSubsystem, PositionConstants.kHomeElevatorPosition));
-    //m_operatorController.b().onTrue(new PIDArmAndElevator(m_ArmSubsystem, PositionConstants.kHumanArmPosition, m_ElevatorSubsystem, PositionConstants.kHumanElevatorPosition));
-//Quinn's Crap
-
-    m_operatorController.pov(90).whileTrue(new ArmCommand(m_ArmSubsystem, true, m_operatorController));
-    m_operatorController.pov(270).whileTrue(new ArmCommand(m_ArmSubsystem, false, m_operatorController));
-    
-
-    m_operatorController.pov(45).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, true, m_operatorController);
-                                                                          new ElevatorCommand(m_ElevatorSubsystem, true);}));
-    m_operatorController.pov(135).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, true, m_operatorController);
-                                                                          new ElevatorCommand(m_ElevatorSubsystem, false);}));
-    m_operatorController.pov(225).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, false, m_operatorController);
-                                                                          new ElevatorCommand(m_ElevatorSubsystem, false);}));
-    m_operatorController.pov(315).whileTrue(new InstantCommand(()->{new ArmCommand(m_ArmSubsystem, false, m_operatorController);
-                                                                          new ElevatorCommand(m_ElevatorSubsystem, true);}));
-    // d pad controls elevator
-    m_operatorController.pov(0).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, true));
-    m_operatorController.pov(180).whileTrue(new ElevatorCommand(m_ElevatorSubsystem, false));
-      
-    // paddles will have setpoints 1-8
-
-    m_DriveSubsystem.setDefaultCommand(
-    new RunCommand(
-          () -> m_DriveSubsystem.drive( 
-              MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.30), 
-              MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.30),
-              MathUtil.applyDeadband(-m_driverController.getRightX(), 0.30),
-              true),
-          m_DriveSubsystem)
-    );
 
   }
   // /** 

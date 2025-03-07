@@ -18,8 +18,8 @@ public final class Constants {
     public static final double kSparkFlexMotorMaxSpeed = 0.5;
     public static final int kSparkFlexMotorCurrentLimit = 40;
 
-    public static final int kSparkMaxMotor1CANID = 1;
-    public static final int kSparkMaxMotor2CANID = 2;
+    public static final int kSparkMaxMotor1CANID = 3;
+    public static final int kSparkMaxMotor2CANID = 4;
     public static final double kSparkMaxMotorMaxSpeed = 0.5;
     public static final int kSparkMaxMotorCurrentLimit = 40;
   }

@@ -28,10 +28,10 @@ public class SparkFlexMotors extends SubsystemBase {
             .smartCurrentLimit(MotorConstants.kSparkFlexMotorCurrentLimit);
         motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }   
-    public void setSpeed(double speed, double runMotors) {
+    public void setSpeed(double speed) {
         if (speed>MotorConstants.kSparkFlexMotorMaxSpeed)
           speed = MotorConstants.kSparkFlexMotorMaxSpeed;
-        m_SparkFlexMotor1.set(speed*runMotors);
-        m_SparkFlexMotor2.set(speed*runMotors);
+        m_SparkFlexMotor1.set(speed);
+        m_SparkFlexMotor2.set(speed);
     }
 }
